@@ -1,101 +1,100 @@
 # 🔍 Local RAG Pipeline with LLM Integration
 
-Ce dépôt contient une implémentation d'un pipeline **RAG (Retrieval-Augmented Generation)** développé dans le cadre d'un test technique pour un poste en alternance.  
-L'objectif est de permettre à un **Large Language Model (LLM)** de répondre à des questions en s'appuyant sur des documents externes, stockés et indexés localement.
+This repository contains an implementation of a **RAG (Retrieval-Augmented Generation)** pipeline developed as part of a technical test for an apprenticeship position.  
+The goal is to enable a **Large Language Model (LLM)** to answer questions based on external documents, stored and indexed locally.
 
 ---
 
-### ⚙️ Technologies utilisées
+### ⚙️ Technologies used
 
-- `llama-index` : pour l'ingestion des documents et la recherche vectorielle
-- `HuggingFace` : pour les embeddings de texte
-- `Mistral 7B` compressé avec `GPTQ` + fine-tuning `PEFT` pour la génération de texte
-
----
-
-### 🧪 Fonctionnement du pipeline
-
-1. Les documents sont placés dans le dossier `articles/`
-2. Ils sont découpés en chunks et encodés en vecteurs (embeddings)
-3. Un index vectoriel est créé
-4. Lorsqu'une question est posée :
-   - les chunks les plus pertinents sont récupérés
-   - ils sont injectés comme contexte dans le LLM
-   - le modèle génère une réponse basée sur ces documents
+- `llama-index`: for document ingestion and vector search
+- `HuggingFace`: for text embeddings
+- `Mistral 7B` compressed with `GPTQ` + `PEFT` fine-tuning for text generation
 
 ---
 
-### 📁 Structure du projet
+### 🧪 How the pipeline works
+
+1. Documents are placed in the `articles/` folder  
+2. They are split into chunks and encoded into vectors (embeddings)  
+3. A vector index is created  
+4. When a question is asked:  
+   - the most relevant chunks are retrieved  
+   - they are injected as context into the LLM  
+   - the model generates an answer based on these documents  
+
+---
+
+### 📁 Project structure
 
 ```bash
 .
-├── final_rag.py       # Script principal
-├── articles/          # Dossier contenant les documents sources
-└── README.md          # Fichier de documentation
+├── final_rag.py       # Principal Script 
+├── articles/          # Folder containing the source documents  
+└── README.md          # Documentation file
 ```
 
-### 📦 Prérequis
-Python 3.9 ou supérieur recommandé
+### 📦 Prerequisites  
+Python 3.9 or higher recommended
 
-Installation des dépendances :
+Dependency installation:
 
 ```bash
 
 pip install llama-index llama-index-embeddings-huggingface peft auto-gptq optimum bitsandbytes transformers accelerate
 ```
 
-### 💡 Le script utilise un modèle compressé (GPTQ), donc il peut fonctionner sur CPU.
+### 💡 The script uses a compressed model (GPTQ), so it can run on CPU.
 
-### ▶️ Exécution du script
-Ajoute tes documents dans le dossier articles/
+### ▶️ Running the script  
+Add your documents to the `articles/` folder
 
-Lance le script avec la commande suivante :
+Run the script with the following command:
 
 ```bash
 python final_rag.py
 ```
 
-Ce que fait le script :
+What the script does:
 
-- Indexe les documents
-- Récupère les passages les plus pertinents
-- Construit un prompt contextuel
-- Génère une réponse à l’aide du LLM
-- Affiche à la fois le contexte utilisé et la réponse générée
+- Indexes the documents  
+- Retrieves the most relevant passages  
+- Builds a context-aware prompt  
+- Generates a response using the LLM  
+- Displays both the context used and the generated response
 
-### ❓ Exemple de requête par défaut
-La question par défaut utilisée dans le script est :
+### ❓ Default query example  
+The default question used in the script is:
 
 ```bash
 What are the two main challenges that hinder the widespread application of the 'LLM-as-a-Judge' approach?
 
 ```
-Le pipeline :
+The pipeline:
 
-- Récupère les 3 chunks les plus pertinents (top_k = 3)
-- Applique un seuil de similarité de 0.5
-- Construit un prompt avec le contexte sélectionné
-- Génère une réponse avec le modèle Mistral + PEFT
+- Retrieves the 3 most relevant chunks (`top_k = 3`)  
+- Applies a similarity threshold of 0.5  
+- Builds a prompt with the selected context  
+- Generates a response using the Mistral model + PEFT
 
-### 🧠 Modèles utilisés
-Modèle d'embedding : BAAI/bge-small-en-v1.5
+### 🧠 Models used  
+Embedding model: `BAAI/bge-small-en-v1.5`  
+LLM (GPTQ compressed): `TheBloke/Mistral-7B-Instruct-v0.2-GPTQ`  
+PEFT fine-tuning adapter: `shawhin/shawgpt-ft`
 
-LLM (compressé GPTQ) : TheBloke/Mistral-7B-Instruct-v0.2-GPTQ
+### ⚠️ Important notes
 
-Adaptateur fine-tuning PEFT : shawhin/shawgpt-ft
+Documents must be added manually to the `articles/` folder.
 
-### ⚠️ Notes importantes
-Les documents doivent être ajoutés manuellement dans le dossier articles/
+The LLM is used in evaluation mode only. This project is intended for local and experimental use. The prompt guides the model toward scientifically accurate and clear responses.
 
-Le LLM est utilisé en mode évaluation uniquement. Ce projet est destiné à un usage local et expérimental. Le prompt guide le modèle vers des réponses scientifiquement exactes et claires.
+### 🎯 Learning objectives  
+This project demonstrates how to:
 
-### 🎯 Objectifs pédagogiques
-Ce projet montre comment :
+- Build a local RAG pipeline  
+- Use vector search with Llama-Index  
+- Inject context into an LLM prompt  
+- Use a compressed and fine-tuned model for efficient responses
 
-- Construire un pipeline RAG local
-- Utiliser la recherche vectorielle avec Llama-Index
-- Injecter du contexte dans un prompt LLM
-- Exploiter un modèle compressé et fine-tuné pour des réponses efficaces
-
-### 👤 Auteur
+### 👤 Author  
 Marion Fresquet
